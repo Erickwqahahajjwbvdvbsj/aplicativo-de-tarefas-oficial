@@ -722,7 +722,7 @@ export function ScreenNotes({ onNavigate }: ScreenNotesProps) {
                 {note.content && (
                   <div className="mb-1.5">
                     <div 
-                      className="text-[#cfcfcf] text-[14px] leading-relaxed line-clamp-5 break-words [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_b]:font-bold [&_strong]:font-bold [&_i]:italic [&_em]:italic [&_u]:underline [&_s]:line-through [&_strike]:line-through"
+                      className="text-[#cfcfcf] text-[14px] leading-relaxed line-clamp-3 break-words [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_b]:font-bold [&_strong]:font-bold [&_i]:italic [&_em]:italic [&_u]:underline [&_s]:line-through [&_strike]:line-through"
                       dangerouslySetInnerHTML={{ __html: note.content }}
                     />
                   </div>

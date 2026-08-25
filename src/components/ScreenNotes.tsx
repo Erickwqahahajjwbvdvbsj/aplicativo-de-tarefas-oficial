@@ -850,7 +850,7 @@ export function ScreenNotes({ onNavigate }: ScreenNotesProps) {
               animate={{ y: 0 }}
               exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
               transition={{ type: "spring", damping: 24, stiffness: 200 }}
-              className="bg-[#1f1f1f] w-full max-h-[90vh] rounded-t-[40px] p-6 flex flex-col gap-4 relative z-40 border-t border-[#4f4f4f] -mb-[100px] pb-[100px]"
+              className="bg-[#1f1f1f] w-full max-h-[90vh] rounded-t-[40px] p-6 flex flex-col gap-4 relative z-40 border-t border-[#4f4f4f] -mb-[100px] pb-[140px]"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Extra background block to prevent detachment during spring bounce */}

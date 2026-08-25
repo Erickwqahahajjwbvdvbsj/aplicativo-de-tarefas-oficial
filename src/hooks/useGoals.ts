@@ -114,7 +114,7 @@ export function useGoals() {
 
       setGoalsState(newGoals);
       setIsLoading(false);
-      // localStorage.removeItem('@app_goals_cache'); // localStorage.setItem('@app_goals_cache', JSON.stringify(newGoals));
+      localStorage.setItem("@app_goals_cache", JSON.stringify(newGoals));
       setTimeout(() => {
         goalEventTarget.dispatchEvent(new CustomEvent('goalsUpdated', { detail: newGoals }));
         goalEventTarget.dispatchEvent(new CustomEvent('goalsLoaded', { detail: false }));
@@ -156,7 +156,7 @@ export function useGoals() {
         const timeB = getTimestamp(b.createdAt, b.id);
         return timeB - timeA;
       });
-      // localStorage.removeItem('@app_goals_cache'); // localStorage.setItem('@app_goals_cache', JSON.stringify(newGoals));
+      localStorage.setItem("@app_goals_cache", JSON.stringify(newGoals));
       setTimeout(() => {
         goalEventTarget.dispatchEvent(new CustomEvent('goalsUpdated', { detail: newGoals }));
       }, 0);
@@ -174,11 +174,11 @@ export function useGoals() {
 
     try {
       const cleanGoal = JSON.parse(JSON.stringify(newGoal));
+      cleanGoal.createdAt = serverTimestamp();
       await setDoc(doc(db, 'goals', goalId), cleanGoal);
     } catch (err) {
       handleFirestoreError(err, OperationType.CREATE, `goals/${goalId}`);
     }
-    return newGoal;
   };
 
   const updateGoal = async (id: string, updates: Partial<Goal>) => {

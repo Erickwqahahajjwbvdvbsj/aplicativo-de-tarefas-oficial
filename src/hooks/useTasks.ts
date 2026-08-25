@@ -153,7 +153,7 @@ export function useTasks() {
       });
       setTasksState(newTasks);
       setIsLoading(false);
-      // localStorage.removeItem('@app_tasks_cache'); // localStorage.setItem('@app_tasks_cache', JSON.stringify(newTasks));
+      localStorage.setItem("@app_tasks_cache", JSON.stringify(newTasks));
       setTimeout(() => {
         taskEventTarget.dispatchEvent(new CustomEvent('tasksUpdated', { detail: newTasks }));
         taskEventTarget.dispatchEvent(new CustomEvent('tasksLoaded', { detail: false }));
@@ -195,7 +195,7 @@ export function useTasks() {
         const timeB = getTimestamp(b.createdAt, b.id);
         return timeB - timeA;
       });
-      // localStorage.removeItem('@app_tasks_cache'); // localStorage.setItem('@app_tasks_cache', JSON.stringify(newTasks));
+      localStorage.setItem("@app_tasks_cache", JSON.stringify(newTasks));
       setTimeout(() => {
         taskEventTarget.dispatchEvent(new CustomEvent('tasksUpdated', { detail: newTasks }));
       }, 0);
@@ -229,11 +229,11 @@ export function useTasks() {
             completed: false
         };
         const cleanDocData = JSON.parse(JSON.stringify(docData));
+        cleanDocData.createdAt = serverTimestamp();
         await setDoc(doc(db, 'tasks', taskId), cleanDocData);
     } catch (err) {
         handleFirestoreError(err, OperationType.CREATE, `tasks/${taskId}`);
     }
-    return newTask;
   };
   const updateTask = async (id: string, updates: Partial<Task>) => {
     const currentUser = user || auth.currentUser;

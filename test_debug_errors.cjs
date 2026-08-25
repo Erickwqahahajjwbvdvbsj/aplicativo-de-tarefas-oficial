@@ -1,5 +1,5 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, collection, getDocs } = require('firebase/firestore');
+const { getFirestore, collection, getDocs, query, limit, orderBy } = require('firebase/firestore');
 
 const firebaseConfig = {
   apiKey: "AIzaSyBNaiZyZY4MtHaErtEzzacNoMUT3XCaghc",
@@ -14,12 +14,10 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 async function run() {
-  try {
-    const goalsSnapshot = await getDocs(collection(db, 'goals'));
-    console.log("Goals in DB:", goalsSnapshot.size);
-  } catch (e) {
-    console.error("Direct fetch failed:", e);
-  }
+  const snapshot = await getDocs(query(collection(db, 'debug_errors'), limit(20)));
+  snapshot.forEach(doc => {
+    console.log(doc.id, "=>", JSON.stringify(doc.data(), null, 2));
+  });
 }
 
 run().catch(console.error);

@@ -56,7 +56,7 @@ export function useNotes() {
       return timeB - timeA;
     });
     setNotesState(sorted);
-    // localStorage.removeItem('@app_notes_cache'); // localStorage.setItem('@app_notes_cache', JSON.stringify(sorted));
+    localStorage.setItem("@app_notes_cache", JSON.stringify(sorted));
     notesEventTarget.dispatchEvent(new CustomEvent('notesUpdated', { detail: sorted }));
   };
 
@@ -139,6 +139,8 @@ export function useNotes() {
       try {
         const payload = { title: newNote.title, content: newNote.content, isPinned: false, ownerId: currentUser.uid };
         const cleanPayload = JSON.parse(JSON.stringify(payload));
+        cleanPayload.createdAt = serverTimestamp();
+        cleanPayload.updatedAt = serverTimestamp();
         await setDoc(doc(db, "notes", newNoteId), cleanPayload);
       } catch (error) {
         handleFirestoreError(error, OperationType.WRITE, `notes/${newNoteId}`);
@@ -186,7 +188,7 @@ export function useNotes() {
         }
         const cleanPayload = JSON.parse(JSON.stringify(payload));
         if (!isOnlyPinToggle) {
-          cleanPayload.updatedAt = new Date().toISOString();
+          cleanPayload.updatedAt = serverTimestamp();
         }
         await setDoc(doc(db, "notes", id), cleanPayload, { merge: true });
       } catch (error) {

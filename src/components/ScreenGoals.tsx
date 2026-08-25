@@ -1069,27 +1069,25 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
                     animate={{ y: 0 }}
                     exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                     transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                    className="absolute -bottom-[100px] pb-[100px] left-0 w-full z-[110]"
+                    className="absolute -bottom-[100px] pb-[100px] left-0 w-full h-[720px] max-h-[92vh] flex flex-col bg-[#1f1f1f] rounded-t-[40px] pt-6 px-6 z-[110] border-t border-[#4f4f4f]"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {/* Extra background block extending down to prevent detachment during spring bounce */}
-                    <div className="absolute top-[50%] left-0 right-0 h-[500px] bg-[#1f1f1f] pointer-events-none" />
+                    {/* Extra background block to prevent detachment during the spring bounce */}
+                    <div className="absolute top-[98%] left-0 right-0 h-[100px] bg-[#1f1f1f] pointer-events-none" />
 
-                    <div className="w-full h-[720px] max-h-[92vh] flex flex-col bg-[#1f1f1f] rounded-t-[40px] pt-6 px-6 border-t border-[#4f4f4f] overflow-hidden relative">
-                      <div className="flex items-center justify-between shrink-0 pb-4 border-b border-[#2c2c2c] relative z-20 bg-[#1f1f1f]">
-                        <h3 className="text-white font-normal text-[20px]">
-                          Descrição do Objetivo
-                        </h3>
-                        <button onClick={() => setIsDescriptionModalOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-full bg-[#2c2c2c] text-gray-400 hover:text-white transition-colors">
-                          <ChevronRight className="w-4 h-4 rotate-90" />
-                        </button>
-                      </div>
-                      
-                      <div className="flex-1 overflow-y-auto no-scrollbar relative z-10 pt-4 pb-12">
-                        <p className="text-[15px] text-white leading-relaxed font-normal whitespace-pre-wrap">
-                          {selectedGoal.description}
-                        </p>
-                      </div>
+                    <div className="flex items-center justify-between shrink-0 pb-4 border-b border-[#2c2c2c] relative z-20 bg-[#1f1f1f]">
+                      <h3 className="text-white font-normal text-[20px]">
+                        Descrição do Objetivo
+                      </h3>
+                      <button onClick={() => setIsDescriptionModalOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-full bg-[#2c2c2c] text-gray-400 hover:text-white transition-colors">
+                        <ChevronRight className="w-4 h-4 rotate-90" />
+                      </button>
+                    </div>
+                    
+                    <div className="flex-1 overflow-y-auto no-scrollbar relative z-10 pt-4 pb-12">
+                      <p className="text-[15px] text-white leading-relaxed font-normal whitespace-pre-wrap">
+                        {selectedGoal.description}
+                      </p>
                     </div>
                   </motion.div>
                 )}

@@ -997,13 +997,13 @@ let taskStatusText = "";
                         <div className="flex items-center gap-1.5">
                           <span className="text-[14px] font-normal text-[#73777d]">Imagens anexadas:</span>
                         </div>
-                        <div className="flex gap-3 overflow-x-auto no-scrollbar pl-2">
+                        <div className="grid grid-cols-3 gap-3 w-full">
                           {selectedTask.images.map((img: string, idx: number) => (
                             <img 
                               key={idx} 
                               src={img} 
                               onClick={() => setFullscreenImage(img)}
-                              className="w-24 h-24 rounded-[14px] object-cover shrink-0 cursor-pointer border border-[#3d3d3d] hover:opacity-80 transition"
+                              className="w-full aspect-square rounded-[14px] object-cover shrink-0 cursor-pointer border border-[#3d3d3d] hover:opacity-80 transition"
                             />
                           ))}
                         </div>

@@ -1771,13 +1771,13 @@ let taskStatusText = "";
                         <div className="flex items-center gap-1.5">
                           <span className="text-[14px] font-normal text-[#73777d]">Imagens anexadas:</span>
                         </div>
-                        <div className="flex gap-3 overflow-x-auto no-scrollbar pl-2">
+                        <div className="grid grid-cols-3 gap-3 w-full">
                           {selectedTask.images.map((img: string, idx: number) => (
                             <img 
                               key={idx} 
                               src={img} 
                               onClick={() => setFullscreenImage(img)}
-                              className="w-24 h-24 rounded-[14px] object-cover shrink-0 cursor-pointer border border-[#3d3d3d] hover:opacity-80 transition"
+                              className="w-full aspect-square rounded-[14px] object-cover shrink-0 cursor-pointer border border-[#3d3d3d] hover:opacity-80 transition"
                             />
                           ))}
                         </div>
@@ -1796,27 +1796,25 @@ let taskStatusText = "";
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full z-[110]"
+                className="absolute -bottom-[100px] pb-[100px] left-0 w-full h-[720px] max-h-[92vh] flex flex-col bg-[#1f1f1f] rounded-t-[40px] pt-6 px-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Extra background block extending down to prevent detachment during spring bounce */}
-                <div className="absolute top-[50%] left-0 right-0 h-[500px] bg-[#1f1f1f] pointer-events-none" />
+                {/* Extra background block to prevent detachment during the spring bounce */}
+                <div className="absolute top-[98%] left-0 right-0 h-[100px] bg-[#1f1f1f] pointer-events-none" />
 
-                <div className="w-full h-[720px] max-h-[92vh] flex flex-col bg-[#1f1f1f] rounded-t-[40px] pt-6 px-6 border-t border-[#4f4f4f] overflow-hidden relative">
-                  <div className="flex items-center justify-between shrink-0 pb-4 border-b border-[#2c2c2c] relative z-20 bg-[#1f1f1f]">
-                    <h3 className="text-white font-normal text-[20px]">
-                      Descrição da Tarefa
-                    </h3>
-                    <button onClick={() => setIsDescriptionModalOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-full bg-[#2c2c2c] text-gray-400 hover:text-white transition-colors">
-                      <ChevronRight className="w-4 h-4 rotate-90" />
-                    </button>
-                  </div>
-                  
-                  <div className="flex-1 overflow-y-auto no-scrollbar relative z-10 pt-4 pb-12">
-                    <p className="text-[15px] text-white leading-relaxed font-normal whitespace-pre-wrap">
-                      {selectedTask.description}
-                    </p>
-                  </div>
+                <div className="flex items-center justify-between shrink-0 pb-4 border-b border-[#2c2c2c] relative z-20 bg-[#1f1f1f]">
+                  <h3 className="text-white font-normal text-[20px]">
+                    Descrição da Tarefa
+                  </h3>
+                  <button onClick={() => setIsDescriptionModalOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-full bg-[#2c2c2c] text-gray-400 hover:text-white transition-colors">
+                    <ChevronRight className="w-4 h-4 rotate-90" />
+                  </button>
+                </div>
+                
+                <div className="flex-1 overflow-y-auto no-scrollbar relative z-10 pt-4 pb-12">
+                  <p className="text-[15px] text-white leading-relaxed font-normal whitespace-pre-wrap">
+                    {selectedTask.description}
+                  </p>
                 </div>
               </motion.div>
             )}

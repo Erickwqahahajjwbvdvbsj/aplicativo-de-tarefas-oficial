@@ -173,10 +173,20 @@ export function useGoals() {
     updateLocalGoals((prev) => [newGoal, ...prev]);
 
     try {
-      await setDoc(doc(db, 'goals', goalId), {
-        ...newGoal,
-        createdAt: serverTimestamp()
-      });
+      const removeUndefined = (obj: any) => {
+        const newObj: any = {};
+        Object.keys(obj).forEach(key => {
+            if (obj[key] !== undefined) {
+                newObj[key] = obj[key];
+            }
+        });
+        return newObj;
+      };
+
+      const finalDocData = removeUndefined(newGoal);
+      finalDocData.createdAt = serverTimestamp();
+
+      await setDoc(doc(db, 'goals', goalId), finalDocData);
     } catch (err) {
       handleFirestoreError(err, OperationType.CREATE, `goals/${goalId}`);
     }
@@ -189,7 +199,18 @@ export function useGoals() {
     updateLocalGoals((prev) => prev.map(g => g.id === id ? { ...g, ...updates } : g));
 
     try {
-      await setDoc(doc(db, 'goals', id), { ...updates, ownerId: currentUser.uid }, { merge: true });
+      const payload: any = { ...updates, ownerId: currentUser.uid };
+      const removeUndefined = (obj: any) => {
+        const newObj: any = {};
+        Object.keys(obj).forEach(key => {
+            if (obj[key] !== undefined) {
+                newObj[key] = obj[key];
+            }
+        });
+        return newObj;
+      };
+
+      await setDoc(doc(db, 'goals', id), removeUndefined(payload), { merge: true });
     } catch (err) {
       handleFirestoreError(err, OperationType.UPDATE, `goals/${id}`);
     }

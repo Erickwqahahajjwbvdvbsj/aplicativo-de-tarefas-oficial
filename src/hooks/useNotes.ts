@@ -132,21 +132,29 @@ export function useNotes() {
       createdAt: nowIso,
       updatedAt: nowIso,
     };
-
     const updated = [newNote, ...notes];
     updateNotesState(updated);
-
     const currentUser = user || auth.currentUser;
     if (currentUser) {
       try {
-        await setDoc(doc(db, "notes", newNoteId), {
+        const payload = {
           title: newNote.title,
           content: newNote.content,
           isPinned: false,
           ownerId: currentUser.uid,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
-        });
+        };
+        const removeUndefined = (obj: any) => {
+          const newObj: any = {};
+          Object.keys(obj).forEach(key => {
+              if (obj[key] !== undefined) {
+                  newObj[key] = obj[key];
+              }
+          });
+          return newObj;
+        };
+        await setDoc(doc(db, "notes", newNoteId), removeUndefined(payload));
       } catch (error) {
         handleFirestoreError(error, OperationType.WRITE, `notes/${newNoteId}`);
       }
@@ -194,7 +202,18 @@ export function useNotes() {
         if (!isOnlyPinToggle) {
           payload.updatedAt = serverTimestamp();
         }
-        await setDoc(doc(db, "notes", id), payload, { merge: true });
+        
+        const removeUndefined = (obj: any) => {
+          const newObj: any = {};
+          Object.keys(obj).forEach(key => {
+              if (obj[key] !== undefined) {
+                  newObj[key] = obj[key];
+              }
+          });
+          return newObj;
+        };
+
+        await setDoc(doc(db, "notes", id), removeUndefined(payload), { merge: true });
       } catch (error) {
         handleFirestoreError(error, OperationType.WRITE, `notes/${id}`);
       }

@@ -1,0 +1,18 @@
+                      
+                  <div className="flex items-center justify-between gap-3 mb-1.5 relative min-h-[28px]">
+                        <h3 className="text-white font-bold text-[17px] leading-snug break-words flex-1 min-w-0">
+                          Objetivo {String(goals.length - goals.findIndex(g => g.id === goal.id)).padStart(2, '0')}
+                        </h3>
+                      </div>
+                  <div>
+                    <div className="text-[#cfcfcf] text-[14px] leading-relaxed line-clamp-5 break-words">
+                      {goal.title}
+                    </div>
+                    {goal.isPinned && (
+                      <div className="mt-1.5 flex items-center justify-end text-[11px] text-[#808080] font-medium">
+                        <span>Fixado</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div id="editor" contenteditable="true">Testing</div>
+<script>
+  const editor = document.getElementById('editor');
+  editor.focus();
+  const sel = window.getSelection();
+  const range = document.createRange();
+  range.setStart(editor.firstChild, 3);
+  range.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(range);
+  
+  // Pending bold
+  document.execCommand('bold', false);
+  console.log("After bold:", document.queryCommandState('bold')); // should be true
+  
+  // Now simulate restoreSelection by removing and adding range
+  sel.removeAllRanges();
+  sel.addRange(range);
+  console.log("After restore:", document.queryCommandState('bold')); // likely false
+</script>
+</body>
+</html>

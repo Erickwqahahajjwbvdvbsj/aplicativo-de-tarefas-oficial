@@ -1,0 +1,22 @@
+--- src/components/ScreenGoals.tsx
++++ src/components/ScreenGoals.tsx
+@@ -475,13 +475,16 @@
+                 <div 
+-                  className={`bg-[#282828] rounded-[7px] py-4 px-5 cursor-pointer flex items-start justify-start transition-all duration-300 ease-out flex-shrink-0 ${slidingGoalIds.includes(goal.id) ? 'opacity-0 translate-x-[150%] scale-95' : 'opacity-100 translate-x-0 scale-100'}`}
++                  className={`bg-[#282828] rounded-[7px] pt-3.5 pb-4 px-5 cursor-pointer flex items-start justify-start transition-all duration-300 ease-out flex-shrink-0 ${slidingGoalIds.includes(goal.id) ? 'opacity-0 translate-x-[150%] scale-95' : 'opacity-100 translate-x-0 scale-100'}`}
+                   onClick={() => {
+                     setSelectedGoal(goal);
+                     setGoalDetailsView('timeline');
+                   }}
+                 >
+                     <div className="flex flex-col justify-start flex-1 min-w-0">
+-                      <p className="font-roboto font-normal text-[15px] leading-[22px] w-full break-words whitespace-normal text-white">
++                      <div className="flex items-center justify-between gap-3 mb-1.5 relative">
++                        <h3 className="text-white font-bold text-[17px] leading-snug break-words flex-1 min-w-0">
++                          Jornada {goals.length - goals.findIndex(g => g.id === goal.id)}
++                        </h3>
++                      </div>
++                      <p className="text-[#cfcfcf] text-[14px] leading-relaxed line-clamp-5 break-words">
+                         {goal.title}
+                       </p>
+                     </div>

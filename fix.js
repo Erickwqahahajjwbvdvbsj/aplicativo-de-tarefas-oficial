@@ -1,0 +1,13 @@
+const fs = require('fs');
+let c = fs.readFileSync('src/components/ScreenGoals.tsx', 'utf8');
+
+const target = `                <div \n                  className=\`bg-[#282828] rounded-[7px] py-3.5 px-4 cursor-pointer flex items-start justify-start transition-all duration-300 ease-out flex-shrink-0 \${slidingGoalIds.includes(goal.id) ? 'opacity-0 translate-x-[150%] scale-95' : 'opacity-100 translate-x-0 scale-100'}\`\n                  onClick={() => {\n                    setSelectedGoal(goal);\n                    setGoalDetailsView('timeline');\n                  }}\n                >\n                    \n                    <div className="flex flex-col justify-start flex-1 min-w-0">\n                      <div className="flex items-center justify-between gap-3 mb-1.5 relative">\n                        <h3 className="text-white font-bold text-[17px] leading-snug break-words flex-1 min-w-0">\n                          Jornada {goals.length - goals.findIndex(g => g.id === goal.id)}\n                        </h3>\n                      </div>\n                      <p className="text-[#cfcfcf] text-[14px] leading-relaxed line-clamp-5 break-words">\n                        {goal.title}\n                      </p>\n                    </div>\n                  </div>\n                </div>`;
+
+const replacement = `                <div \n                  className=\`w-full bg-[#282828] hover:bg-[#343434] hover:border-[#4f4f4f]/40 border border-transparent rounded-[7px] px-4 py-3.5 cursor-pointer relative group transition-all duration-300 ease-out flex-shrink-0 \${slidingGoalIds.includes(goal.id) ? 'opacity-0 translate-x-[150%] scale-95' : 'opacity-100 translate-x-0 scale-100'}\`\n                  onClick={() => {\n                    setSelectedGoal(goal);\n                    setGoalDetailsView('timeline');\n                  }}\n                >\n                  <div className="flex items-center justify-between gap-3 mb-1.5 relative">\n                    <h3 className="text-white font-bold text-[17px] leading-snug break-words flex-1 min-w-0">\n                      Jornada {goals.length - goals.findIndex(g => g.id === goal.id)}\n                    </h3>\n                  </div>\n                  <div className="mb-1.5">\n                    <div className="text-[#cfcfcf] text-[14px] leading-relaxed line-clamp-5 break-words">\n                      {goal.title}\n                    </div>\n                  </div>\n                </div>`;
+
+if (c.includes(target)) {
+  fs.writeFileSync('src/components/ScreenGoals.tsx', c.replace(target, replacement));
+  console.log("Success");
+} else {
+  console.log("Target not found");
+}

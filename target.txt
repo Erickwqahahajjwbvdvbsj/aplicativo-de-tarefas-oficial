@@ -1,0 +1,15 @@
+                <div 
+                  className={`bg-[#282828] rounded-[7px] py-4 px-5 cursor-pointer flex items-start justify-start transition-all duration-300 ease-out flex-shrink-0 ${slidingGoalIds.includes(goal.id) ? 'opacity-0 translate-x-[150%] scale-95' : 'opacity-100 translate-x-0 scale-100'}`}
+                  onClick={() => {
+                    setSelectedGoal(goal);
+                    setGoalDetailsView('timeline');
+                  }}
+                >
+                      
+                    <div className="flex flex-col justify-start flex-1 min-w-0">
+                      <p className="font-roboto font-normal text-[15px] leading-[22px] w-full break-words whitespace-normal text-white">
+                        {goal.title}
+                      </p>
+                    </div>
+                  </div>
+                </div>

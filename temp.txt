@@ -1,0 +1,26 @@
+            >
+              {/* Extra background block to prevent detachment during the spring bounce */}
+              <div className="absolute top-[98%] left-0 right-0 h-[100px] bg-[#1f1f1f] pointer-events-none" />
+
+              <div className="flex flex-col gap-4 pb-0 no-scrollbar">
+                <input
+                  type="text"
+                  maxLength={100}
+                  placeholder="Título do seu objetivo: limite 100 caracteres"
+                  className="w-full shrink-0 bg-[#2c2c2c] border border-transparent rounded-[14px] px-5 py-4 text-[14px] text-[#e8e8e9] outline-none focus:ring-0 focus:border-transparent placeholder-[#73777d]"
+                  value={newGoalTitle}
+                  onChange={(e) => setNewGoalTitle(e.target.value)}
+                />
+                
+                <button
+                  onClick={() => {
+                    setIsTaskSelectionOpen(true);
+                    setIsStartDatePickerOpen(false);
+                    setIsStartTimePickerOpen(false);
+                    setIsEndDatePickerOpen(false);
+                  }}
+                  className="w-full shrink-0 h-[56px] bg-[#2c2c2c] border border-transparent rounded-[14px] px-5 text-[14px] text-left outline-none focus:ring-0 focus:border-transparent flex items-center justify-between"
+                >
+                  <span className={selectedTaskIds.length > 0 ? "text-[#e8e8e9]" : "text-[#73777d]"}>
+                    {selectedTaskIds.length > 0 ? (selectedTaskIds.length === 1 ? "1 tarefa selecionada" : `${selectedTaskIds.length} tarefas selecionadas`) : "Selecionar tarefas para meu objetivo"}
+                  </span>

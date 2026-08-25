@@ -1,0 +1,182 @@
+import re
+
+with open("src/components/ScreenGoals.tsx", "r") as f:
+    text = f.read()
+
+# Replace the entire modal content
+start_marker = '<div className="relative overflow-hidden min-h-[300px]">'
+end_marker = '                </AnimatePresence>\n              </div>'
+
+# Let's find the boundaries of the form
+start_idx = text.find(start_marker)
+# Find the end_marker corresponding to this block
+end_idx = text.find(end_marker, start_idx) + len(end_marker)
+
+new_form = """              <div className="flex flex-col gap-4 pb-0 no-scrollbar w-full">
+                <input
+                  type="text"
+                  maxLength={100}
+                  placeholder="Título da sua jornada: limite 100 caracteres"
+                  className="w-full shrink-0 bg-[#2c2c2c] border border-transparent rounded-[14px] px-5 py-4 text-[14px] text-[#e8e8e9] outline-none focus:ring-0 focus:border-transparent placeholder-[#73777d]"
+                  value={newGoalTitle}
+                  onChange={(e) => setNewGoalTitle(e.target.value)}
+                />
+                
+                <textarea
+                  placeholder="Adicione uma descrição para a jornada..."
+                  className="w-full shrink-0 bg-[#2c2c2c] border border-transparent rounded-[14px] px-5 py-4 text-[14px] text-[#e8e8e9] h-[100px] resize-none outline-none focus:ring-0 focus:border-transparent placeholder-[#73777d] no-scrollbar"
+                  value={newGoalDescription}
+                  onChange={(e) => setNewGoalDescription(e.target.value)}
+                />
+
+                <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory shrink-0 pb-2 -mx-6 px-6 scroll-px-6">
+                  <button
+                    onClick={() => {
+                      setIsTaskSelectionOpen(true);
+                      setIsStartDatePickerOpen(false);
+                      setIsStartTimePickerOpen(false);
+                      setIsEndDatePickerOpen(false);
+                      setIsEndPickerOpen(false);
+                      setIsEndTimePickerOpen(false);
+                    }}
+                    className="shrink-0 w-[200px] h-[56px] bg-[#2c2c2c] border border-transparent rounded-[14px] px-5 text-[14px] text-[#e8e8e9] outline-none focus:ring-0 focus:border-transparent text-left relative flex justify-between items-center snap-start"
+                  >
+                    <span className="truncate mr-2">
+                      {goalStages.length > 0 ? <span className="text-white">{goalStages.length === 1 ? "1 etapa" : `${goalStages.length} etapas`}</span> : <span className="text-[#73777d]">Criar etapas</span>}
+                    </span>
+                    <ChevronRight className={`w-4 h-4 shrink-0 text-[#73777d] transition-transform ${isTaskSelectionOpen ? "rotate-90" : ""}`} />
+                  </button>
+                  <button 
+                     onClick={() => {
+                        setIsStartPickerOpen(!isStartPickerOpen);
+                        setIsStartDatePickerOpen(false);
+                        setIsStartTimePickerOpen(false);
+                        setIsEndDatePickerOpen(false);
+                        setIsEndPickerOpen(false);
+                        setIsEndTimePickerOpen(false);
+                     }}
+                     className="shrink-0 w-[200px] h-[56px] bg-[#2c2c2c] border border-transparent rounded-[14px] px-5 text-[14px] text-[#e8e8e9] outline-none focus:ring-0 focus:border-transparent text-left relative flex justify-between items-center snap-start"
+                  >
+                     <span className="truncate mr-2">{newGoalStartDate || newGoalStartTime ? <span className="text-white">{`${newGoalStartDate ? new Date(newGoalStartDate + 'T12:00:00').toLocaleDateString('pt-BR') : ''}${(newGoalStartDate && newGoalStartTime) ? ' às ' : ''}${newGoalStartTime || ''}`}</span> : <span className="text-[#73777d]">Início da Jornada</span>}</span>
+                     <ChevronRight className={`w-4 h-4 shrink-0 text-[#73777d] transition-transform ${isStartPickerOpen ? "rotate-90" : ""}`} />
+                  </button>
+                  <button 
+                     onClick={() => {
+                        setIsEndPickerOpen(!isEndPickerOpen);
+                        setIsEndDatePickerOpen(false);
+                        setIsEndTimePickerOpen(false);
+                        setIsStartDatePickerOpen(false);
+                        setIsStartPickerOpen(false);
+                     }}
+                     className="shrink-0 w-[200px] h-[56px] bg-[#2c2c2c] border border-transparent rounded-[14px] px-5 text-[14px] text-[#e8e8e9] outline-none focus:ring-0 focus:border-transparent text-left relative flex justify-between items-center snap-start"
+                  >
+                     <span className="truncate mr-2">{newGoalEndDate || newGoalEndTime ? <span className="text-white">{`${newGoalEndDate ? new Date(newGoalEndDate + 'T12:00:00').toLocaleDateString('pt-BR') : ''}${(newGoalEndDate && newGoalEndTime) ? ' às ' : ''}${newGoalEndTime || ''}`}</span> : <span className="text-[#73777d]">Prazo Final</span>}</span>
+                     <ChevronRight className={`w-4 h-4 shrink-0 text-[#73777d] transition-transform ${isEndPickerOpen ? "rotate-90" : ""}`} />
+                  </button>
+                </div>
+
+                <AnimatePresence>
+                {newGoalTitle.trim() !== '' && goalStages.length > 0 && newGoalStartDate !== '' && newGoalEndDate !== '' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, height: 0, marginTop: -16 }}
+                    animate={{ opacity: 1, y: 0, height: 'auto', marginTop: 0 }}
+                    exit={{ opacity: 0, y: 10, height: 0, marginTop: -16 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden mt-2"
+                  >
+                    <SlideToSubmit 
+                      onTrigger={handleCreateGoal}
+                      disabled={isSaving}
+                      text={editingGoalId ? 'Salvar Alterações' : 'Salvar minha jornada'}
+                    />
+                  </motion.div>
+                )}
+                </AnimatePresence>
+              </div>"""
+
+if start_idx != -1 and end_idx != -1:
+    text = text[:start_idx] + new_form + text[end_idx:]
+
+# Next, we need to add the bottom sheet for `isTaskSelectionOpen` which now holds the stages editor.
+# We'll just replace the old `isTaskSelectionOpenModal` if it exists. But wait, I deleted it previously.
+# Let's add it right before the {editingStageId && ( modal.
+
+bottom_sheet = """
+      <AnimatePresence>
+        {isTaskSelectionOpen && (
+          <motion.div key="isTaskSelectionOpenModal"
+            initial={{ opacity: 0, y: "100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="absolute bottom-0 left-0 w-full h-[70vh] bg-[#1f1f1f] shadow-[0_-20px_40px_rgba(0,0,0,0.5)] rounded-t-[30px] pt-6 px-6 z-[110] border-t border-[#4f4f4f] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-6 shrink-0 border-b border-white/[0.04]">
+              <div className="flex items-center gap-3">
+                <h3 className="text-white font-bold text-[18px]">Adicionar Etapas à Jornada</h3>
+              </div>
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => {
+                    const newStage = { id: Date.now().toString(), title: `Etapa ${goalStages.length + 1}`, description: '', tasks: [] };
+                    setGoalStages([...goalStages, newStage]);
+                  }}
+                  className="w-8 h-8 rounded-full bg-[#2c2c2c] hover:bg-[#ff3838] text-white flex items-center justify-center transition-colors"
+                >
+                  <Plus className="w-5 h-5" />
+                </button>
+                <button onClick={() => setIsTaskSelectionOpen(false)} className="w-8 h-8 rounded-full bg-[#2c2c2c] flex items-center justify-center text-gray-400 hover:text-white transition-colors">
+                  <ChevronRight className="w-4 h-4 rotate-90" />
+                </button>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3 overflow-y-auto max-h-[50vh] no-scrollbar py-4">
+              {goalStages.length === 0 ? (
+                <div className="text-center text-[#73777d] text-[14px] py-8">Nenhuma etapa adicionada.</div>
+              ) : (
+                goalStages.map((stage, idx) => (
+                  <div key={stage.id} className="bg-[#2c2c2c] rounded-[14px] p-4 flex flex-col gap-2">
+                     <div className="flex items-center justify-between">
+                        <span className="text-[#a0a0a0] text-[12px] font-bold uppercase tracking-wider">Etapa {idx + 1}</span>
+                        <button onClick={() => setGoalStages(goalStages.filter(s => s.id !== stage.id))} className="text-[#73777d] hover:text-[#ff3838] transition-colors"><Trash2 className="w-4 h-4" /></button>
+                     </div>
+                     <input 
+                        type="text" 
+                        placeholder="Título da etapa" 
+                        value={stage.title}
+                        onChange={e => setGoalStages(goalStages.map(s => s.id === stage.id ? { ...s, title: e.target.value } : s))}
+                        className="bg-transparent border-none outline-none text-white text-[16px] font-medium placeholder-[#73777d] w-full"
+                     />
+                     <textarea 
+                        placeholder="Descrição da etapa (opcional)" 
+                        value={stage.description}
+                        onChange={e => setGoalStages(goalStages.map(s => s.id === stage.id ? { ...s, description: e.target.value } : s))}
+                        className="bg-transparent border-none outline-none text-[#a0a0a0] text-[14px] placeholder-[#555] w-full resize-none h-[40px] no-scrollbar"
+                     />
+                     <div className="flex flex-col gap-1 mt-2">
+                        {stage.tasks.map(t => (
+                          <div key={t.id} className="flex items-center justify-between">
+                             <span className="text-[#e8e8e9] text-[14px]">• {t.title}</span>
+                             <button onClick={() => setGoalStages(goalStages.map(s => s.id === stage.id ? { ...s, tasks: s.tasks.filter(task => task.id !== t.id) } : s))} className="text-[#73777d] hover:text-[#ff3838]"><X className="w-3 h-3" /></button>
+                          </div>
+                        ))}
+                        <button onClick={() => setEditingStageId(stage.id)} className="flex items-center gap-1 text-[#ff3838] text-[12px] font-medium mt-1 w-fit hover:opacity-80 transition-opacity">
+                          <Plus className="w-3 h-3" /> Adicionar Tarefa
+                        </button>
+                     </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+"""
+
+text = text.replace('{editingStageId && (', bottom_sheet + '\n        {editingStageId && (')
+
+with open("src/components/ScreenGoals.tsx", "w") as f:
+    f.write(text)
+

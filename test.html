@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div id="editor" contenteditable="true">
+  Hello <span style="font-size: 20px;">World</span> <font size="7">Testing</font>
+</div>
+<script>
+  // select all
+  const editor = document.getElementById('editor');
+  const range = document.createRange();
+  range.selectNodeContents(editor);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  
+  document.execCommand('removeFormat', false, null);
+  console.log(editor.innerHTML);
+</script>
+</body>
+</html>

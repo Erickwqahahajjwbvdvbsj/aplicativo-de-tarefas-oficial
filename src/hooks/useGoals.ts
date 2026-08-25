@@ -173,28 +173,9 @@ export function useGoals() {
     updateLocalGoals((prev) => [newGoal, ...prev]);
 
     try {
-      const removeUndefined = (obj: any): any => {
-        if (Array.isArray(obj)) {
-          return obj.map(removeUndefined);
-        } else if (obj !== null && typeof obj === 'object') {
-          if (obj.constructor.name !== 'Object' && obj.constructor.name !== 'Array') {
-            return obj; // Leave FieldValue and other instances intact
-          }
-          const newObj: any = {};
-          Object.keys(obj).forEach(key => {
-              if (obj[key] !== undefined) {
-                  newObj[key] = removeUndefined(obj[key]);
-              }
-          });
-          return newObj;
-        }
-        return obj;
-      };
-
-      const finalDocData = removeUndefined(newGoal);
-      finalDocData.createdAt = serverTimestamp();
-
-      await setDoc(doc(db, 'goals', goalId), finalDocData);
+      const cleanGoal = JSON.parse(JSON.stringify(newGoal));
+      cleanGoal.createdAt = serverTimestamp();
+      await setDoc(doc(db, 'goals', goalId), cleanGoal);
     } catch (err) {
       handleFirestoreError(err, OperationType.CREATE, `goals/${goalId}`);
     }
@@ -208,25 +189,8 @@ export function useGoals() {
 
     try {
       const payload: any = { ...updates, ownerId: currentUser.uid };
-      const removeUndefined = (obj: any): any => {
-        if (Array.isArray(obj)) {
-          return obj.map(removeUndefined);
-        } else if (obj !== null && typeof obj === 'object') {
-          if (obj.constructor.name !== 'Object' && obj.constructor.name !== 'Array') {
-            return obj; // Leave FieldValue and other instances intact
-          }
-          const newObj: any = {};
-          Object.keys(obj).forEach(key => {
-              if (obj[key] !== undefined) {
-                  newObj[key] = removeUndefined(obj[key]);
-              }
-          });
-          return newObj;
-        }
-        return obj;
-      };
-
-      await setDoc(doc(db, 'goals', id), removeUndefined(payload), { merge: true });
+      const cleanPayload = JSON.parse(JSON.stringify(payload));
+      await setDoc(doc(db, 'goals', id), cleanPayload, { merge: true });
     } catch (err) {
       handleFirestoreError(err, OperationType.UPDATE, `goals/${id}`);
     }

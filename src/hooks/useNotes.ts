@@ -137,32 +137,11 @@ export function useNotes() {
     const currentUser = user || auth.currentUser;
     if (currentUser) {
       try {
-        const payload = {
-          title: newNote.title,
-          content: newNote.content,
-          isPinned: false,
-          ownerId: currentUser.uid,
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
-        };
-        const removeUndefined = (obj: any): any => {
-        if (Array.isArray(obj)) {
-          return obj.map(removeUndefined);
-        } else if (obj !== null && typeof obj === 'object') {
-          if (obj.constructor.name !== 'Object' && obj.constructor.name !== 'Array') {
-            return obj; // Leave FieldValue and other instances intact
-          }
-          const newObj: any = {};
-          Object.keys(obj).forEach(key => {
-              if (obj[key] !== undefined) {
-                  newObj[key] = removeUndefined(obj[key]);
-              }
-          });
-          return newObj;
-        }
-        return obj;
-      };
-        await setDoc(doc(db, "notes", newNoteId), removeUndefined(payload));
+        const payload = { title: newNote.title, content: newNote.content, isPinned: false, ownerId: currentUser.uid };
+        const cleanPayload = JSON.parse(JSON.stringify(payload));
+        cleanPayload.createdAt = serverTimestamp();
+        cleanPayload.updatedAt = serverTimestamp();
+        await setDoc(doc(db, "notes", newNoteId), cleanPayload);
       } catch (error) {
         handleFirestoreError(error, OperationType.WRITE, `notes/${newNoteId}`);
       }
@@ -207,29 +186,11 @@ export function useNotes() {
         } else if (updates.isPinned === false) {
           payload.pinnedAt = null;
         }
+        const cleanPayload = JSON.parse(JSON.stringify(payload));
         if (!isOnlyPinToggle) {
-          payload.updatedAt = serverTimestamp();
+          cleanPayload.updatedAt = serverTimestamp();
         }
-        
-        const removeUndefined = (obj: any): any => {
-        if (Array.isArray(obj)) {
-          return obj.map(removeUndefined);
-        } else if (obj !== null && typeof obj === 'object') {
-          if (obj.constructor.name !== 'Object' && obj.constructor.name !== 'Array') {
-            return obj; // Leave FieldValue and other instances intact
-          }
-          const newObj: any = {};
-          Object.keys(obj).forEach(key => {
-              if (obj[key] !== undefined) {
-                  newObj[key] = removeUndefined(obj[key]);
-              }
-          });
-          return newObj;
-        }
-        return obj;
-      };
-
-        await setDoc(doc(db, "notes", id), removeUndefined(payload), { merge: true });
+        await setDoc(doc(db, "notes", id), cleanPayload, { merge: true });
       } catch (error) {
         handleFirestoreError(error, OperationType.WRITE, `notes/${id}`);
       }

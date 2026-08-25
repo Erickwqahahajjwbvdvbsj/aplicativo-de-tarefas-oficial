@@ -228,26 +228,9 @@ export function useTasks() {
             ownerId: currentUser.uid,
             completed: false
         };
-        const removeUndefined = (obj: any): any => {
-        if (Array.isArray(obj)) {
-          return obj.map(removeUndefined);
-        } else if (obj !== null && typeof obj === 'object') {
-          if (obj.constructor.name !== 'Object' && obj.constructor.name !== 'Array') {
-            return obj; // Leave FieldValue and other instances intact
-          }
-          const newObj: any = {};
-          Object.keys(obj).forEach(key => {
-              if (obj[key] !== undefined) {
-                  newObj[key] = removeUndefined(obj[key]);
-              }
-          });
-          return newObj;
-        }
-        return obj;
-      };
-        const finalDocData = removeUndefined(docData);
-        finalDocData.createdAt = serverTimestamp();
-        await setDoc(doc(db, 'tasks', taskId), finalDocData);
+        const cleanDocData = JSON.parse(JSON.stringify(docData));
+        cleanDocData.createdAt = serverTimestamp();
+        await setDoc(doc(db, 'tasks', taskId), cleanDocData);
     } catch (err) {
         handleFirestoreError(err, OperationType.CREATE, `tasks/${taskId}`);
     }
@@ -269,28 +252,8 @@ export function useTasks() {
     
     try {
         let finalUpdates = { ...updates, ownerId: currentUser.uid };
-        const removeUndefined = (obj: any): any => {
-        if (Array.isArray(obj)) {
-          return obj.map(removeUndefined);
-        } else if (obj !== null && typeof obj === 'object') {
-          if (obj.constructor.name !== 'Object' && obj.constructor.name !== 'Array') {
-            return obj; // Leave FieldValue and other instances intact
-          }
-          const newObj: any = {};
-          Object.keys(obj).forEach(key => {
-              if (obj[key] !== undefined) {
-                  newObj[key] = removeUndefined(obj[key]);
-              }
-          });
-          return newObj;
-        }
-        return obj;
-      };
-        finalUpdates = removeUndefined(finalUpdates);
-        // Keep images as base64 in Firestore directly
-        // finalUpdates.images remains unchanged
-
-        await setDoc(doc(db, 'tasks', id), finalUpdates, { merge: true });
+        const cleanUpdates = JSON.parse(JSON.stringify(finalUpdates));
+        await setDoc(doc(db, 'tasks', id), cleanUpdates, { merge: true });
     } catch (err) {
         handleFirestoreError(err, OperationType.UPDATE, `tasks/${id}`);
     }

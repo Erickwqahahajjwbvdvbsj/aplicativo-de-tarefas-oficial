@@ -1746,7 +1746,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
             animate={{ y: managingTasksForStageId ? "100%" : 0 }}
             exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
             transition={{ type: "spring", damping: 24, stiffness: 200 }}
-            className="absolute -bottom-[100px] pb-[164px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] z-[120] border-t border-[#4f4f4f] flex flex-col max-h-[90vh]"
+            className="absolute -bottom-[100px] pb-[140px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] z-[120] border-t border-[#4f4f4f] flex flex-col max-h-[90vh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Background extension block to prevent gap/detachment at the bottom during spring bounce animation */}

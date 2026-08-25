@@ -1119,14 +1119,11 @@ export function ScreenNotes({ onNavigate }: ScreenNotesProps) {
               {/* Extra background block extending down to prevent detachment during spring bounce */}
               <div className="absolute top-[80%] left-0 right-0 h-[400px] bg-[#1f1f1f] pointer-events-none" />
 
-              <div className="bg-[#1f1f1f] w-full h-[660px] max-h-[90vh] rounded-t-[40px] px-6 flex flex-col relative border-t border-[#4f4f4f] overflow-hidden -mb-[100px] pb-[100px]">
+              <div className="bg-[#1f1f1f] w-full h-[720px] max-h-[92vh] rounded-t-[40px] px-6 flex flex-col relative border-t border-[#4f4f4f] overflow-hidden -mb-[100px] pb-[100px]">
                 {/* Scrollable Content (Full Note Content, No Truncation) */}
                 <div className="flex-1 overflow-y-auto no-scrollbar relative z-10 text-[#e8e8e9] text-[15px] leading-relaxed break-words [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_b]:font-bold [&_strong]:font-bold [&_i]:italic [&_em]:italic [&_u]:underline [&_s]:line-through [&_strike]:line-through space-y-2 pt-7 pb-12">
                   <div dangerouslySetInnerHTML={{ __html: selectedViewNote.content }} />
                 </div>
-
-                {/* Bottom fade gradient */}
-                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#1f1f1f] to-transparent pointer-events-none z-20" />
               </div>
             </motion.div>
           </motion.div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useProfile } from "./useProfile";
-import { db, storage } from "../lib/firebase";
+import { db, storage, auth } from "../lib/firebase";
 import { collection, doc, onSnapshot, setDoc, deleteDoc, query, where, serverTimestamp, getDocs } from "firebase/firestore";
 import { ref, uploadString, getDownloadURL, deleteObject } from "firebase/storage";
 import { handleFirestoreError, OperationType } from "../lib/firebaseError";
@@ -204,12 +204,14 @@ export function useTasks() {
   };
 
   const setTasks = (newTasks: Task[]) => {
-    if (!user) return; // Do not save if not logged in
+    const currentUser = user || auth.currentUser;
+    if (!currentUser) return; // Do not save if not logged in
     updateLocalTasks(() => newTasks);
   };
 
   const addTask = async (task: Omit<Task, "id" | "createdAt">) => {
-    if (!user) return; // Do not save if not logged in
+    const currentUser = user || auth.currentUser;
+    if (!currentUser) return; // Do not save if not logged in
     const taskId = Date.now().toString() + "_" + Math.random().toString(36).substring(2, 7);
     const newTask = { ...task, id: taskId, completed: false, createdAt: new Date().toISOString() } as Task;
     
@@ -223,7 +225,7 @@ export function useTasks() {
             ...task,
             id: taskId,
             images: finalImages,
-            ownerId: user.uid,
+            ownerId: currentUser.uid,
             completed: false
         };
         const removeUndefined = (obj: any) => {
@@ -243,7 +245,8 @@ export function useTasks() {
     }
   };
   const updateTask = async (id: string, updates: Partial<Task>) => {
-    if (!user) return;
+    const currentUser = user || auth.currentUser;
+    if (!currentUser) return;
     
     let oldImages: string[] = [];
     
@@ -257,7 +260,7 @@ export function useTasks() {
     });
     
     try {
-        let finalUpdates = { ...updates, ownerId: user.uid };
+        let finalUpdates = { ...updates, ownerId: currentUser.uid };
         const removeUndefined = (obj: any) => {
             const newObj: any = {};
             Object.keys(obj).forEach(key => {
@@ -277,7 +280,8 @@ export function useTasks() {
     }
   };
   const deleteTask = async (id: string) => {
-    if (!user) return;
+    const currentUser = user || auth.currentUser;
+    if (!currentUser) return;
     
     let oldImages: string[] = [];
     // optimistic update

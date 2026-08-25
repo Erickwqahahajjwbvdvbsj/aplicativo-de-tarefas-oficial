@@ -182,8 +182,13 @@ export function useProfile() {
         const goalsQuery = query(collection(db, 'goals'), where('ownerId', '==', user.uid));
         const goalsSnapshot = await getDocs(goalsQuery);
         const goalDeletePromises = goalsSnapshot.docs.map(docSnap => deleteDoc(doc(db, 'goals', docSnap.id)));
+
+        // Delete all notes for the user
+        const notesQuery = query(collection(db, 'notes'), where('ownerId', '==', user.uid));
+        const notesSnapshot = await getDocs(notesQuery);
+        const noteDeletePromises = notesSnapshot.docs.map(docSnap => deleteDoc(doc(db, 'notes', docSnap.id)));
         
-        await Promise.all([...taskDeletePromises, ...notificationDeletePromises, ...goalDeletePromises]);
+        await Promise.all([...taskDeletePromises, ...notificationDeletePromises, ...goalDeletePromises, ...noteDeletePromises]);
 
         setProfile({
             ...DEFAULT_PROFILE,
@@ -224,8 +229,13 @@ export function useProfile() {
         const goalsQuery = query(collection(db, 'goals'), where('ownerId', '==', user.uid));
         const goalsSnapshot = await getDocs(goalsQuery);
         const goalDeletePromises = goalsSnapshot.docs.map(docSnap => deleteDoc(doc(db, 'goals', docSnap.id)));
+
+        // Delete all notes for the user
+        const notesQuery = query(collection(db, 'notes'), where('ownerId', '==', user.uid));
+        const notesSnapshot = await getDocs(notesQuery);
+        const noteDeletePromises = notesSnapshot.docs.map(docSnap => deleteDoc(doc(db, 'notes', docSnap.id)));
         
-        await Promise.all([...taskDeletePromises, ...notificationDeletePromises, ...goalDeletePromises]);
+        await Promise.all([...taskDeletePromises, ...notificationDeletePromises, ...goalDeletePromises, ...noteDeletePromises]);
         
         localStorage.removeItem('@app_profile_cache');
         sessionStorage.removeItem('@app_has_seen_auth');

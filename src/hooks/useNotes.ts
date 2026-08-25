@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useProfile } from "./useProfile";
-import { db } from "../lib/firebase";
+import { db, auth } from "../lib/firebase";
 import { collection, doc, onSnapshot, setDoc, deleteDoc, query, where, serverTimestamp } from "firebase/firestore";
 import { handleFirestoreError, OperationType } from "../lib/firebaseError";
 
@@ -136,13 +136,14 @@ export function useNotes() {
     const updated = [newNote, ...notes];
     updateNotesState(updated);
 
-    if (user) {
+    const currentUser = user || auth.currentUser;
+    if (currentUser) {
       try {
         await setDoc(doc(db, "notes", newNoteId), {
           title: newNote.title,
           content: newNote.content,
           isPinned: false,
-          ownerId: user.uid,
+          ownerId: currentUser.uid,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         });
@@ -181,9 +182,10 @@ export function useNotes() {
     });
     updateNotesState(updated);
 
-    if (user) {
+    const currentUser = user || auth.currentUser;
+    if (currentUser) {
       try {
-        const payload: any = { ...updates, ownerId: user.uid };
+        const payload: any = { ...updates, ownerId: currentUser.uid };
         if (updates.isPinned === true) {
           payload.pinnedAt = nowIso;
         } else if (updates.isPinned === false) {
@@ -203,7 +205,8 @@ export function useNotes() {
     const updated = notes.filter((n) => n.id !== id);
     updateNotesState(updated);
 
-    if (user) {
+    const currentUser = user || auth.currentUser;
+    if (currentUser) {
       try {
         await deleteDoc(doc(db, "notes", id));
       } catch (error) {

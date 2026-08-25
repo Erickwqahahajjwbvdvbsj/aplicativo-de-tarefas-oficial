@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useProfile } from "./useProfile";
-import { db } from "../lib/firebase";
+import { db, auth } from "../lib/firebase";
 import { collection, doc, onSnapshot, setDoc, deleteDoc, query, where, serverTimestamp } from "firebase/firestore";
 import { handleFirestoreError, OperationType } from "../lib/firebaseError";
 
@@ -165,9 +165,10 @@ export function useGoals() {
   };
 
   const addGoal = async (goal: Omit<Goal, "id" | "createdAt" | "ownerId">) => {
-    if (!user) return;
+    const currentUser = user || auth.currentUser;
+    if (!currentUser) return;
     const goalId = Date.now().toString() + "_" + Math.random().toString(36).substring(2, 7);
-    const newGoal = { ...goal, id: goalId, ownerId: user.uid } as Goal;
+    const newGoal = { ...goal, id: goalId, ownerId: currentUser.uid } as Goal;
 
     updateLocalGoals((prev) => [newGoal, ...prev]);
 
@@ -182,19 +183,21 @@ export function useGoals() {
   };
 
   const updateGoal = async (id: string, updates: Partial<Goal>) => {
-    if (!user) return;
+    const currentUser = user || auth.currentUser;
+    if (!currentUser) return;
 
     updateLocalGoals((prev) => prev.map(g => g.id === id ? { ...g, ...updates } : g));
 
     try {
-      await setDoc(doc(db, 'goals', id), { ...updates, ownerId: user.uid }, { merge: true });
+      await setDoc(doc(db, 'goals', id), { ...updates, ownerId: currentUser.uid }, { merge: true });
     } catch (err) {
       handleFirestoreError(err, OperationType.UPDATE, `goals/${id}`);
     }
   };
 
   const deleteGoal = async (id: string) => {
-    if (!user) return;
+    const currentUser = user || auth.currentUser;
+    if (!currentUser) return;
 
     updateLocalGoals((prev) => prev.filter(g => g.id !== id));
 

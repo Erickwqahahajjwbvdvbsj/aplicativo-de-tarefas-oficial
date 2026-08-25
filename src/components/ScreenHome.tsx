@@ -791,7 +791,7 @@ let taskStatusText = "";
                   y: "100%", 
                   transition: { type: "spring", damping: 24, stiffness: 200 } 
                 }}
-                className="bg-[#1f1f1f] w-full h-[660px] max-h-[90vh] rounded-t-[40px] pt-6 px-6 pb-[100px] flex flex-col relative border-t border-[#4f4f4f] z-40 -mb-[100px]"
+                className="bg-[#1f1f1f] w-full h-[720px] max-h-[92vh] rounded-t-[40px] pt-6 px-6 pb-[100px] flex flex-col relative border-t border-[#4f4f4f] z-40 -mb-[100px]"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Extra background block to prevent detachment during the spring bounce */}
@@ -1021,7 +1021,7 @@ let taskStatusText = "";
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full h-[660px] max-h-[90vh] flex flex-col bg-[#1f1f1f] rounded-t-[40px] pt-6 px-6 z-[110] border-t border-[#4f4f4f]"
+                className="absolute -bottom-[100px] pb-[100px] left-0 w-full h-[720px] max-h-[92vh] flex flex-col bg-[#1f1f1f] rounded-t-[40px] pt-6 px-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Extra background block to prevent detachment during the spring bounce */}

@@ -636,7 +636,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
                   y: "100%", 
                   transition: { type: "spring", damping: 24, stiffness: 200 } 
                 }}
-                className="bg-[#1f1f1f] w-full h-[660px] max-h-[90vh] rounded-t-[40px] pt-6 px-6 pb-[100px] flex flex-col relative border-t border-[#4f4f4f] z-40 -mb-[100px]"
+                className="bg-[#1f1f1f] w-full h-[720px] max-h-[92vh] rounded-t-[40px] pt-6 px-6 pb-[100px] flex flex-col relative border-t border-[#4f4f4f] z-40 -mb-[100px]"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Extra background block to prevent detachment during the spring bounce */}
@@ -1075,7 +1075,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
                     {/* Extra background block extending down to prevent detachment during spring bounce */}
                     <div className="absolute top-[50%] left-0 right-0 h-[500px] bg-[#1f1f1f] pointer-events-none" />
 
-                    <div className="w-full h-[660px] max-h-[90vh] flex flex-col bg-[#1f1f1f] rounded-t-[40px] pt-6 px-6 border-t border-[#4f4f4f] overflow-hidden relative">
+                    <div className="w-full h-[720px] max-h-[92vh] flex flex-col bg-[#1f1f1f] rounded-t-[40px] pt-6 px-6 border-t border-[#4f4f4f] overflow-hidden relative">
                       <div className="flex items-center justify-between shrink-0 pb-4 border-b border-[#2c2c2c] relative z-20 bg-[#1f1f1f]">
                         <h3 className="text-white font-normal text-[20px]">
                           Descrição do Objetivo

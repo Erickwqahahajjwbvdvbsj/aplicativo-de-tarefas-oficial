@@ -667,7 +667,7 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                 y: "100%",
                 transition: { type: "spring", damping: 24, stiffness: 200 }
               }}
-              className="bg-[#1f1f1f] w-full max-h-[90vh] rounded-t-[40px] p-6 flex flex-col gap-4 relative z-40 border-t border-[#4f4f4f] -mb-[100px] pb-[100px]"
+              className="bg-[#1f1f1f] w-full max-h-[90vh] rounded-t-[40px] p-6 flex flex-col gap-4 relative z-40 border-t border-[#4f4f4f] -mb-[100px] pb-[150px]"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Extra background block to prevent detachment during the spring bounce */}
@@ -877,7 +877,7 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] pt-6 px-6 z-[110] border-t border-[#4f4f4f]"
+                className="absolute -bottom-[100px] pb-[150px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] pt-6 px-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-6">
@@ -934,7 +934,7 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] pt-6 px-6 z-[110] border-t border-[#4f4f4f]"
+                className="absolute -bottom-[100px] pb-[150px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] pt-6 px-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-6">
@@ -981,7 +981,7 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] pt-6 px-6 z-[110] border-t border-[#4f4f4f]"
+                className="absolute -bottom-[100px] pb-[150px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] pt-6 px-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-6">
@@ -1028,7 +1028,7 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
+                className="absolute -bottom-[100px] pb-[150px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-6">
@@ -1108,7 +1108,7 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] pt-6 px-6 z-[110] border-t border-[#4f4f4f]"
+                className="absolute -bottom-[100px] pb-[150px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] pt-6 px-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-6">
@@ -1165,7 +1165,7 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
+                className="absolute -bottom-[100px] pb-[150px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-6">
@@ -1243,7 +1243,7 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
+                className="absolute -bottom-[100px] pb-[150px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-6">
@@ -1285,7 +1285,7 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
+                className="absolute -bottom-[100px] pb-[150px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-6">
@@ -1325,7 +1325,7 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
+                className="absolute -bottom-[100px] pb-[150px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-6">
@@ -1360,7 +1360,7 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
+                className="absolute -bottom-[100px] pb-[150px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-6">
@@ -1389,7 +1389,7 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
+                className="absolute -bottom-[100px] pb-[150px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[110] border-t border-[#4f4f4f]"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-between items-center mb-6">
@@ -1500,7 +1500,7 @@ let taskStatusText = "";
                   y: "100%", 
                   transition: { type: "spring", damping: 24, stiffness: 200 } 
                 }}
-                className="bg-[#1f1f1f] w-full h-[660px] max-h-[90vh] rounded-t-[40px] pt-6 px-6 pb-[100px] flex flex-col relative border-t border-[#4f4f4f] z-40 -mb-[100px]"
+                className="bg-[#1f1f1f] w-full h-[660px] max-h-[90vh] rounded-t-[40px] pt-6 px-6 pb-[150px] flex flex-col relative border-t border-[#4f4f4f] z-40 -mb-[100px]"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Extra background block to prevent detachment during the spring bounce */}
@@ -1796,7 +1796,7 @@ let taskStatusText = "";
                 animate={{ y: 0 }}
                 exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
                 transition={{ type: "spring", damping: 24, stiffness: 200 }}
-                className="absolute -bottom-[100px] pb-[100px] left-0 w-full z-[110]"
+                className="absolute -bottom-[100px] pb-[150px] left-0 w-full z-[110]"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Extra background block extending down to prevent detachment during spring bounce */}
@@ -2083,7 +2083,7 @@ let taskStatusText = "";
             animate={{ y: 0 }}
             exit={{ y: "100%", transition: { type: "spring", damping: 24, stiffness: 200 } }}
             transition={{ type: "spring", damping: 24, stiffness: 200 }}
-            className="absolute -bottom-[100px] pb-[100px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[1100] border-t border-[#4f4f4f]"
+            className="absolute -bottom-[100px] pb-[150px] left-0 w-full bg-[#1f1f1f] rounded-t-[30px] p-6 z-[1100] border-t border-[#4f4f4f]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-6">

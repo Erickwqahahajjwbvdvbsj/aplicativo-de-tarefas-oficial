@@ -2104,18 +2104,18 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: -120, opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", damping: 24, stiffness: 280 }}
-            className="fixed top-4 left-4 right-4 max-w-[420px] mx-auto z-[250] bg-[#1f1f1f] border border-[#383838] rounded-[16px] shadow-[0_16px_36px_rgba(0,0,0,0.85)] overflow-hidden pointer-events-auto select-none"
+            className="fixed top-4 left-4 right-4 max-w-[420px] mx-auto z-[250] bg-[#1f1f1f] border border-[#383838] rounded-[16px] overflow-hidden pointer-events-auto select-none"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="px-4 pt-3.5 pb-4 flex flex-col text-left">
               <h4 className="text-white font-bold text-[14.5px] leading-snug">
                 {stageUnlockNotification.isFinal 
-                  ? "Parabéns por concluir a sua jornada!" 
+                  ? "Parabéns por alcançar seu objetivo!" 
                   : "Parabéns por concluir esta etapa!"}
               </h4>
               <p className="text-[#a0a0a0] text-[12.5px] leading-[1.4] mt-1">
                 {stageUnlockNotification.isFinal
-                  ? "Você alcançou o objetivo final e concluiu com sucesso todas as etapas desta jornada! Parabéns por essa incrível conquista."
+                  ? "Você concluiu todas as etapas da sua jornada com sucesso."
                   : "Você acaba de desbloquear o próximo desafio da sua jornada."}
               </p>
             </div>

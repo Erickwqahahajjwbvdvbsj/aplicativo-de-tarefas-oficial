@@ -4,14 +4,9 @@ import { MoreVertical, ChevronDown, Crosshair, Target, CheckCircle2, Circle, Plu
 import { useGoals, Goal, GoalStage } from '../hooks/useGoals';
 import { useTasks, Task } from '../hooks/useTasks';
 import { POP_SOUND_DATA_URI } from '../assets/popSound';
-import { TrophyLottie } from './TrophyLottie';
 
-const UNLOCK_AUDIO_URL = "https://files.catbox.moe/k9oq92.mp3";
 const GOAL_COMPLETE_AUDIO_URL = "https://files.catbox.moe/jdkqtg.mp3";
 const STAGE_TASK_AUDIO_URL = POP_SOUND_DATA_URI;
-
-let sharedUnlockAudioBuffer: AudioBuffer | null = null;
-let sharedUnlockAudioContext: AudioContext | null = null;
 
 let sharedPopAudioBuffer: AudioBuffer | null = null;
 let sharedPopAudioContext: AudioContext | null = null;
@@ -28,27 +23,6 @@ const dataUriToArrayBuffer = (dataUri: string): ArrayBuffer => {
     bytes[i] = binaryString.charCodeAt(i);
   }
   return bytes.buffer;
-};
-
-const preloadUnlockAudio = async () => {
-  if (typeof window === 'undefined') return;
-  try {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-    if (!AudioContextClass) return;
-    
-    if (!sharedUnlockAudioContext) {
-      sharedUnlockAudioContext = new AudioContextClass();
-    }
-    if (sharedUnlockAudioContext.state === 'suspended') {
-      sharedUnlockAudioContext.resume().catch(() => {});
-    }
-    
-    const response = await fetch(UNLOCK_AUDIO_URL);
-    const arrayBuffer = await response.arrayBuffer();
-    sharedUnlockAudioBuffer = await sharedUnlockAudioContext.decodeAudioData(arrayBuffer);
-  } catch (err) {
-    console.warn('Failed to preload unlock audio:', err);
-  }
 };
 
 const preloadPopAudio = async () => {
@@ -107,15 +81,11 @@ const setupAudioUnlock = () => {
     if (!sharedGoalAudioBuffer) {
       preloadGoalAudio();
     }
-    if (sharedUnlockAudioContext && sharedUnlockAudioContext.state === 'suspended') {
-      sharedUnlockAudioContext.resume().catch(() => {});
-    }
   };
   window.addEventListener('click', unlock, { passive: true });
   window.addEventListener('touchstart', unlock, { passive: true });
 };
 
-preloadUnlockAudio();
 preloadPopAudio();
 preloadGoalAudio();
 setupAudioUnlock();
@@ -175,9 +145,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
   const [isTaskSelectionOpen, setIsTaskSelectionOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isDiscardModalOpen, setIsDiscardModalOpen] = useState(false);
-  const [unlockedStageModal, setUnlockedStageModal] = useState(false);
-  const [isFinalDestinationModal, setIsFinalDestinationModal] = useState(false);
-  const [unlockAnimationPhase, setUnlockAnimationPhase] = useState<'lock' | 'text'>('lock');
+  const [stageUnlockNotification, setStageUnlockNotification] = useState<{ isFinal: boolean; id: string } | null>(null);
   const previousStageIdxRef = useRef<number | null>(null);
   const previousGoalIdRef = useRef<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -226,21 +194,39 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
     } catch (e) { }
   };
 
-  const playUnlockSound = () => {
+  const playNotificationSound = () => {
     try {
-      if (sharedUnlockAudioContext && sharedUnlockAudioBuffer) {
-        if (sharedUnlockAudioContext.state === 'suspended') {
-          sharedUnlockAudioContext.resume();
-        }
-        const source = sharedUnlockAudioContext.createBufferSource();
-        source.buffer = sharedUnlockAudioBuffer;
-        source.connect(sharedUnlockAudioContext.destination);
-        source.start(0);
-      } else {
-        const audio = new Audio(UNLOCK_AUDIO_URL);
-        audio.volume = 1;
-        audio.play().catch(e => console.log('Audio error:', e));
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContextClass) return;
+      const ctx = new AudioContextClass();
+      if (ctx.state === 'suspended') {
+        ctx.resume().catch(() => {});
       }
+      const now = ctx.currentTime;
+      
+      const tones = [
+        { freq: 659.25, start: 0, dur: 0.35, gain: 0.16 },
+        { freq: 880, start: 0.09, dur: 0.55, gain: 0.2 },
+        { freq: 1174.66, start: 0.18, dur: 0.7, gain: 0.22 }
+      ];
+
+      tones.forEach(({ freq, start, dur, gain: vol }) => {
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + start);
+
+        gainNode.gain.setValueAtTime(0.0001, now + start);
+        gainNode.gain.linearRampToValueAtTime(vol, now + start + 0.02);
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, now + start + dur);
+
+        osc.connect(gainNode);
+        gainNode.connect(ctx.destination);
+
+        osc.start(now + start);
+        osc.stop(now + start + dur);
+      });
     } catch (err) { }
   };
 
@@ -345,21 +331,11 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
       
       if (previousGoalIdRef.current === selectedGoal.id && previousStageIdxRef.current !== null && currentStageIdx > previousStageIdxRef.current) {
         const isFinal = currentStageIdx >= (selectedGoal.stages?.length || 0);
-        setIsFinalDestinationModal(isFinal);
-        setTimeout(() => {
-          setUnlockedStageModal(true);
-          setUnlockAnimationPhase('lock');
-          
-          setTimeout(() => {
-            if (!isFinal) {
-              playUnlockSound();
-            }
-          }, 900);
-          
-          setTimeout(() => {
-             setUnlockAnimationPhase('text');
-          }, isFinal ? 3800 : 2000);
-        }, 400);
+        setStageUnlockNotification({
+          isFinal,
+          id: Date.now().toString(),
+        });
+        playNotificationSound();
       }
       
       previousStageIdxRef.current = currentStageIdx;
@@ -369,6 +345,15 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
       previousGoalIdRef.current = null;
     }
   }, [selectedGoal]);
+
+  useEffect(() => {
+    if (stageUnlockNotification) {
+      const timer = setTimeout(() => {
+        setStageUnlockNotification(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [stageUnlockNotification]);
 
     const getTimestamp = (val: any, fallbackId?: string) => {
   if (!val) return fallbackId ? (parseInt(fallbackId) || 0) : 0;
@@ -617,6 +602,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
               className="absolute inset-0 bg-black/80 z-[100] flex flex-col justify-end overflow-hidden"
               onClick={(e) => { 
                 e.stopPropagation();
+                if (stageUnlockNotification) return; // Trava enquanto a notificação estiver ativa na tela
                 if (isDescriptionModalOpen) {
                   setIsDescriptionModalOpen(false);
                 } else if (openDetailCategory) {
@@ -2107,135 +2093,40 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
         )}
       </AnimatePresence>
 
+      {/* Notificação de Desbloqueio de Etapa no Topo do Aplicativo */}
       <AnimatePresence>
-        {unlockedStageModal && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 z-[100] flex items-center justify-center bg-black/90 px-6"
-            onClick={(e) => {
-              e.stopPropagation();
-              setUnlockedStageModal(false);
-            }}
+        {stageUnlockNotification && (
+          <motion.div
+            key={stageUnlockNotification.id}
+            initial={{ y: -120, opacity: 0, scale: 0.95 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: -120, opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", damping: 24, stiffness: 280 }}
+            className="fixed top-4 left-4 right-4 max-w-[420px] mx-auto z-[250] bg-[#1f1f1f] border border-[#383838] rounded-[16px] shadow-[0_16px_36px_rgba(0,0,0,0.85)] overflow-hidden pointer-events-auto select-none"
+            onClick={(e) => e.stopPropagation()}
           >
-            <style dangerouslySetInnerHTML={{__html: `
-              @keyframes shake-and-pop {
-                0%, 15% { transform: scale(1) translate(0, 0) rotate(0); }
-                16% { transform: translate(-4px, 2px) rotate(-4deg); }
-                18% { transform: translate(4px, -2px) rotate(4deg); }
-                20% { transform: translate(-4px, -2px) rotate(-4deg); }
-                22% { transform: translate(4px, 2px) rotate(4deg); }
-                24% { transform: translate(-3px, 0) rotate(-2deg); }
-                26% { transform: translate(3px, 0) rotate(2deg); }
-                28% { transform: scale(0.9) translateY(6px); }
-                32% { transform: scale(1.1) translateY(-6px); }
-                38%, 75% { transform: scale(1) translateY(0); }
-                80%, 100% { transform: scale(1) translate(0, 0) rotate(0); }
-              }
-              @keyframes open-shackle {
-                0%, 28% { transform: translateY(0) rotate(0deg); }
-                32% { transform: translateY(-5px) rotate(-22deg); }
-                38%, 75% { transform: translateY(-3px) rotate(-16deg); }
-                80%, 100% { transform: translateY(0) rotate(0deg); }
-              }
-              .lock-container {
-                position: relative;
-                width: 130px;
-                height: 169px;
-                animation: shake-and-pop 3s infinite;
-              }
-              .shackle-container {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 1;
-                transform-origin: 28% 47.6923%;
-                animation: open-shackle 3s infinite;
-              }
-              .body-container {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 2;
-              }
-            `}} />
-            <AnimatePresence mode="wait">
-              {unlockAnimationPhase === 'lock' ? (
-                isFinalDestinationModal ? (
-                  <motion.div
-                    key="trophy"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.85, filter: 'blur(10px)' }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                    className="flex items-center justify-center pointer-events-none"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <TrophyLottie />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="lock"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
-                    transition={{ duration: 0.5 }}
-                    className="flex items-center justify-center pointer-events-none"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                     <div className="lock-container">
-                       <div className="shackle-container">
-                         <svg viewBox="0 0 100 130">
-                           <path d="M 30 90 V 35 A 20 20 0 0 1 70 35 V 65" 
-                                 fill="none" 
-                                 stroke="#ffffff" 
-                                 strokeWidth="6" 
-                                 strokeLinecap="round" />
-                         </svg>
-                       </div>
-                       <div className="body-container">
-                         <svg viewBox="0 0 100 130">
-                           <rect x="20" y="62" width="60" height="46" rx="8" 
-                                 fill="#1f1f1f" 
-                                 stroke="#ffffff" 
-                                 strokeWidth="6" />
-                           <rect x="47" y="78" width="6" height="14" rx="3" 
-                                 fill="#1f1f1f" 
-                                 stroke="#ffffff" 
-                                 strokeWidth="4" />
-                         </svg>
-                       </div>
-                     </div>
-                  </motion.div>
-                )
-              ) : (
-                <motion.div 
-                  key="modal-text"
-                  initial={{ scale: 0.85, opacity: 0, y: 10 }}
-                  animate={{ scale: 1, opacity: 1, y: 0 }}
-                  exit={{ scale: 0.9, opacity: 0, y: 10 }}
-                  transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
-                  className="bg-[#1f1f1f] rounded-3xl p-6 h-[213px] w-[318px] flex flex-col items-center justify-center relative max-w-full overflow-hidden"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="w-[270px] flex-shrink-0 flex flex-col items-start text-left justify-center h-full">
-                    <h3 className="text-white font-bold text-[22px] mb-3 leading-[1.15]">
-                      {isFinalDestinationModal ? "Parabéns por concluir a sua jornada!" : "Parabéns por concluir mais uma etapa!"}
-                    </h3>
-                    <p className="text-[#a0a0a0] text-[15px] leading-[1.45]">
-                      {isFinalDestinationModal 
-                        ? "Você alcançou o objetivo final e concluiu com sucesso todas as etapas desta jornada! Parabéns por essa incrível conquista." 
-                        : "Você acaba de desbloquear o próximo desafio da sua jornada. Continue avançando, cada conquista leva você um passo mais perto do seu objetivo."}
-                    </p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div className="px-4 pt-3.5 pb-4 flex flex-col text-left">
+              <h4 className="text-white font-bold text-[14.5px] leading-snug">
+                {stageUnlockNotification.isFinal 
+                  ? "Parabéns por concluir a sua jornada!" 
+                  : "Parabéns por concluir esta etapa!"}
+              </h4>
+              <p className="text-[#a0a0a0] text-[12.5px] leading-[1.4] mt-1">
+                {stageUnlockNotification.isFinal
+                  ? "Você alcançou o objetivo final e concluiu com sucesso todas as etapas desta jornada! Parabéns por essa incrível conquista."
+                  : "Você acaba de desbloquear o próximo desafio da sua jornada."}
+              </p>
+            </div>
+
+            {/* Linha de progresso branca colada exatamente na borda de baixo */}
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-transparent overflow-hidden">
+              <motion.div
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 5, ease: "linear" }}
+                className="h-full bg-white"
+              />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

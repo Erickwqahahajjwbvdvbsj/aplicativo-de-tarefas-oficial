@@ -708,14 +708,14 @@ export function ScreenHome({
               </div>
 
               {/* Gráfico de Conclusão da Semana (Segunda a Domingo) */}
-              <div className="bg-[#282828] rounded-[7px] pt-3 pb-4 px-4 flex flex-col mb-6 transition-all duration-300">
+              <div className="bg-[#282828] rounded-[7px] pt-3 pb-4 px-4 flex flex-col mb-6">
                 <div className="flex items-center justify-between mb-3.5">
                   <span className="text-[#73777d] text-[12px] font-medium">
                     Gráfico de tarefas concluídas nesta semana
                   </span>
                 </div>
 
-                <div className="flex items-end justify-between gap-2 pt-1 px-1 transition-all duration-300">
+                <div className="flex items-end justify-between gap-2 pt-1 px-1">
                   {weekDays.map((day) => {
                     const clampedCount = Math.min(day.count, 30);
                     const barHeight = day.count === 0 

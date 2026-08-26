@@ -765,7 +765,8 @@ export function ScreenNotes({ onNavigate }: ScreenNotesProps) {
           <img
             src="https://i.ibb.co/JNnKTWq/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-170502-0000.png"
             alt="Início"
-            className="w-[26px] h-[26px] object-contain"
+            className="w-[26px] h-[26px] object-contain pointer-events-none select-none"
+            draggable={false}
             referrerPolicy="no-referrer"
           />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">
@@ -780,7 +781,8 @@ export function ScreenNotes({ onNavigate }: ScreenNotesProps) {
           <img
             src="https://i.ibb.co/FqbdJ8MT/Picsart-26-07-22-22-47-11-226.png"
             alt="Tarefas"
-            className="w-[28px] h-[28px] object-contain translate-y-[1px]"
+            className="w-[28px] h-[28px] object-contain translate-y-[1px] pointer-events-none select-none"
+            draggable={false}
             referrerPolicy="no-referrer"
           />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">
@@ -795,7 +797,8 @@ export function ScreenNotes({ onNavigate }: ScreenNotesProps) {
           <img
             src="https://i.ibb.co/B2YpNgVD/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-165417-0000.png"
             alt="Objetivos"
-            className="w-[26px] h-[26px] object-contain"
+            className="w-[26px] h-[26px] object-contain pointer-events-none select-none"
+            draggable={false}
             referrerPolicy="no-referrer"
           />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">
@@ -808,8 +811,8 @@ export function ScreenNotes({ onNavigate }: ScreenNotesProps) {
           className="flex flex-col items-center justify-center gap-1 min-w-[56px]"
         >
           <div className="relative w-[27px] h-[27px]">
-            <img src="https://i.ibb.co/v4fChL23/Vou-pra-puta-que-pariu-amanh-e-n-o-quero-nem-saber-de-nada-rapaz-20260812-130637-0000.png" alt="Anotações" className="absolute inset-0 w-full h-full object-contain" referrerPolicy="no-referrer" />
-            <img src="https://i.ibb.co/ZpzY7Hxs/Vou-pra-puta-que-pariu-amanh-e-n-o-quero-nem-saber-de-nada-rapaz-20260812-130517-0000.png" alt="Anotações Ativo" className="absolute inset-0 w-full h-full object-contain" referrerPolicy="no-referrer" />
+            <img src="https://i.ibb.co/v4fChL23/Vou-pra-puta-que-pariu-amanh-e-n-o-quero-nem-saber-de-nada-rapaz-20260812-130637-0000.png" alt="Anotações" className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
+            <img src="https://i.ibb.co/ZpzY7Hxs/Vou-pra-puta-que-pariu-amanh-e-n-o-quero-nem-saber-de-nada-rapaz-20260812-130517-0000.png" alt="Anotações Ativo" className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
           </div>
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">
             Anotações
@@ -823,7 +826,8 @@ export function ScreenNotes({ onNavigate }: ScreenNotesProps) {
           <img
             src="https://i.ibb.co/bg19xYN8/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-212607-0000.png"
             alt="Seu perfil"
-            className="w-[25px] h-[25px] object-contain"
+            className="w-[25px] h-[25px] object-contain pointer-events-none select-none"
+            draggable={false}
             referrerPolicy="no-referrer"
           />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">

@@ -883,7 +883,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
                                       transition={{ duration: 0.3 }}
                                       className="absolute flex items-center justify-center bg-[#1f1f1f] w-[28px] h-[28px] rounded-full"
                                     >
-                                      <img src="https://i.ibb.co/RkjZrzH6/Vou-pra-puta-que-pariu-amanh-e-n-o-quero-nem-saber-de-nada-rapaz-20260819-132338-0000.png" alt="Bloqueada" className="absolute max-w-none w-[33px] h-[33px] object-contain" referrerPolicy="no-referrer" />
+                                      <img src="https://i.ibb.co/RkjZrzH6/Vou-pra-puta-que-pariu-amanh-e-n-o-quero-nem-saber-de-nada-rapaz-20260819-132338-0000.png" alt="Bloqueada" className="absolute max-w-none w-[33px] h-[33px] object-contain pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
                                     </motion.div>
                                   ) : (
                                     <motion.div 
@@ -993,7 +993,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
                                       transition={{ duration: 0.3 }}
                                       className="absolute flex items-center justify-center bg-[#1f1f1f] w-[28px] h-[28px] rounded-full"
                                     >
-                                      <img src="https://i.ibb.co/RkjZrzH6/Vou-pra-puta-que-pariu-amanh-e-n-o-quero-nem-saber-de-nada-rapaz-20260819-132338-0000.png" alt="Bloqueada" className="absolute max-w-none w-[33px] h-[33px] object-contain" referrerPolicy="no-referrer" />
+                                      <img src="https://i.ibb.co/RkjZrzH6/Vou-pra-puta-que-pariu-amanh-e-n-o-quero-nem-saber-de-nada-rapaz-20260819-132338-0000.png" alt="Bloqueada" className="absolute max-w-none w-[33px] h-[33px] object-contain pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
                                     </motion.div>
                                   ) : (
                                     <motion.div 
@@ -1231,7 +1231,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
           onClick={() => onNavigate?.("home")}
           className="flex flex-col items-center justify-center gap-1 min-w-[56px] hover:opacity-80 transition"
         >
-          <img src="https://i.ibb.co/JNnKTWq/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-170502-0000.png" alt="Início" className="w-[26px] h-[26px] object-contain" referrerPolicy="no-referrer" />
+          <img src="https://i.ibb.co/JNnKTWq/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-170502-0000.png" alt="Início" className="w-[26px] h-[26px] object-contain pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">Início</span>
         </button>
 
@@ -1239,7 +1239,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
           onClick={() => onNavigate?.("roadmap")}
           className="flex flex-col items-center justify-center gap-1 min-w-[56px] hover:opacity-80 transition"
         >
-          <img src="https://i.ibb.co/FqbdJ8MT/Picsart-26-07-22-22-47-11-226.png" alt="Tarefas" className="w-[28px] h-[28px] object-contain translate-y-[1px]" referrerPolicy="no-referrer" />
+          <img src="https://i.ibb.co/FqbdJ8MT/Picsart-26-07-22-22-47-11-226.png" alt="Tarefas" className="w-[28px] h-[28px] object-contain translate-y-[1px] pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">Tarefas</span>
         </button>
 
@@ -1247,7 +1247,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
           onClick={() => onNavigate?.("goals")}
           className="flex flex-col items-center justify-center gap-1 min-w-[56px]"
         >
-          <img src="https://i.ibb.co/93y6xTwJ/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-171109-0000.png" alt="Objetivos" className="w-[26px] h-[26px] object-contain" referrerPolicy="no-referrer" />
+          <img src="https://i.ibb.co/93y6xTwJ/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-171109-0000.png" alt="Objetivos" className="w-[26px] h-[26px] object-contain pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">Objetivos</span>
         </button>
 
@@ -1255,7 +1255,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
           onClick={() => onNavigate?.("notes")}
           className="flex flex-col items-center justify-center gap-1 min-w-[56px] hover:opacity-80 transition"
         >
-          <img src="https://i.ibb.co/v4fChL23/Vou-pra-puta-que-pariu-amanh-e-n-o-quero-nem-saber-de-nada-rapaz-20260812-130637-0000.png" alt="Anotações" className="w-[27px] h-[27px] object-contain" referrerPolicy="no-referrer" />
+          <img src="https://i.ibb.co/v4fChL23/Vou-pra-puta-que-pariu-amanh-e-n-o-quero-nem-saber-de-nada-rapaz-20260812-130637-0000.png" alt="Anotações" className="w-[27px] h-[27px] object-contain pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">Anotações</span>
         </button>
 
@@ -1263,7 +1263,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
           onClick={() => onNavigate?.("profile")}
           className="flex flex-col items-center justify-center gap-1 min-w-[56px] hover:opacity-80 transition"
         >
-          <img src="https://i.ibb.co/bg19xYN8/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-212607-0000.png" alt="Seu perfil" className="w-[25px] h-[25px] object-contain" referrerPolicy="no-referrer" />
+          <img src="https://i.ibb.co/bg19xYN8/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-212607-0000.png" alt="Seu perfil" className="w-[25px] h-[25px] object-contain pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">Seu perfil</span>
         </button>
       </div>

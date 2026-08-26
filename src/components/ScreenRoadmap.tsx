@@ -2167,7 +2167,7 @@ let taskStatusText = "";
           onClick={() => onNavigate?.("home")}
           className="flex flex-col items-center justify-center gap-1 min-w-[56px] hover:opacity-80 transition"
         >
-          <img src="https://i.ibb.co/JNnKTWq/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-170502-0000.png" alt="Início" className="w-[26px] h-[26px] object-contain" referrerPolicy="no-referrer" />
+          <img src="https://i.ibb.co/JNnKTWq/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-170502-0000.png" alt="Início" className="w-[26px] h-[26px] object-contain pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">Início</span>
         </button>
 
@@ -2175,7 +2175,7 @@ let taskStatusText = "";
           onClick={() => onNavigate?.("roadmap")}
           className="flex flex-col items-center justify-center gap-1 min-w-[56px]"
         >
-          <img src="https://i.ibb.co/LzzjQ8Xh/Picsart-26-07-22-22-47-56-320.png" alt="Tarefas" className="w-[28px] h-[28px] object-contain translate-y-[1px]" referrerPolicy="no-referrer" />
+          <img src="https://i.ibb.co/LzzjQ8Xh/Picsart-26-07-22-22-47-56-320.png" alt="Tarefas" className="w-[28px] h-[28px] object-contain translate-y-[1px] pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">Tarefas</span>
         </button>
 
@@ -2183,7 +2183,7 @@ let taskStatusText = "";
           onClick={() => onNavigate?.("goals")}
           className="flex flex-col items-center justify-center gap-1 min-w-[56px] hover:opacity-80 transition"
         >
-          <img src="https://i.ibb.co/B2YpNgVD/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-165417-0000.png" alt="Objetivos" className="w-[26px] h-[26px] object-contain" referrerPolicy="no-referrer" />
+          <img src="https://i.ibb.co/B2YpNgVD/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-165417-0000.png" alt="Objetivos" className="w-[26px] h-[26px] object-contain pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">Objetivos</span>
         </button>
 
@@ -2191,7 +2191,7 @@ let taskStatusText = "";
           onClick={() => onNavigate?.("notes")}
           className="flex flex-col items-center justify-center gap-1 min-w-[56px] hover:opacity-80 transition"
         >
-          <img src="https://i.ibb.co/v4fChL23/Vou-pra-puta-que-pariu-amanh-e-n-o-quero-nem-saber-de-nada-rapaz-20260812-130637-0000.png" alt="Anotações" className="w-[27px] h-[27px] object-contain" referrerPolicy="no-referrer" />
+          <img src="https://i.ibb.co/v4fChL23/Vou-pra-puta-que-pariu-amanh-e-n-o-quero-nem-saber-de-nada-rapaz-20260812-130637-0000.png" alt="Anotações" className="w-[27px] h-[27px] object-contain pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">Anotações</span>
         </button>
 
@@ -2199,7 +2199,7 @@ let taskStatusText = "";
           onClick={() => onNavigate?.("profile")}
           className="flex flex-col items-center justify-center gap-1 min-w-[56px] hover:opacity-80 transition"
         >
-          <img src="https://i.ibb.co/bg19xYN8/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-212607-0000.png" alt="Seu perfil" className="w-[25px] h-[25px] object-contain" referrerPolicy="no-referrer" />
+          <img src="https://i.ibb.co/bg19xYN8/Bem-vindo-ao-Cosmo-List-512-x-512-px-20260711-212607-0000.png" alt="Seu perfil" className="w-[25px] h-[25px] object-contain pointer-events-none select-none" draggable={false} referrerPolicy="no-referrer" />
           <span className="text-[10px] font-bold text-[#aaaaaa] text-center leading-none mt-0.5">Seu perfil</span>
         </button>
       </div>

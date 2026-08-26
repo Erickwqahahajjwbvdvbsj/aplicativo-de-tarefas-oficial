@@ -331,11 +331,13 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
       
       if (previousGoalIdRef.current === selectedGoal.id && previousStageIdxRef.current !== null && currentStageIdx > previousStageIdxRef.current) {
         const isFinal = currentStageIdx >= (selectedGoal.stages?.length || 0);
-        setStageUnlockNotification({
-          isFinal,
-          id: Date.now().toString(),
-        });
-        playNotificationSound();
+        setTimeout(() => {
+          setStageUnlockNotification({
+            isFinal,
+            id: Date.now().toString(),
+          });
+          playNotificationSound();
+        }, 350);
       }
       
       previousStageIdxRef.current = currentStageIdx;

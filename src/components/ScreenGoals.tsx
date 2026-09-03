@@ -495,16 +495,11 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
                         </h3>
                         
                       </div>
-                                    <div className={goal.isPinned ? "mb-1.5" : ""}>
+                                    <div>
                     <div className="text-[#cfcfcf] text-[14px] leading-relaxed line-clamp-5 break-words">
                       {goal.title}
                     </div>                                      
                   </div>
-                  {goal.isPinned && (
-                    <div className="flex items-center justify-start text-[11px] text-[#808080] font-medium">
-                      <span>Fixado</span>
-                    </div>
-                  )}
                 </div>
                 
               </div>

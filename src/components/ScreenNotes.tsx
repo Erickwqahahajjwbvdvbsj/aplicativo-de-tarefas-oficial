@@ -730,7 +730,6 @@ export function ScreenNotes({ onNavigate }: ScreenNotesProps) {
 
                 <div className="flex items-center justify-between text-[11px] text-[#808080] font-medium">
                   <span>{formatNoteDate(note.updatedAt)}</span>
-                  {note.isPinned && <span>Fixada</span>}
                 </div>
               </div>
             );

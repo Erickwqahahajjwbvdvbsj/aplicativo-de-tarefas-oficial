@@ -600,11 +600,6 @@ export function ScreenRoadmap({ onBack, onNavigate }: { onBack: () => void, onNa
                       >
                         {task.title}
                       </p>
-                      {task.isPinned && (
-                        <div className="mt-1.5 flex items-center justify-start text-[11px] text-[#808080] font-medium w-full">
-                          <span>Fixada</span>
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>

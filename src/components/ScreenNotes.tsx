@@ -651,7 +651,7 @@ export function ScreenNotes({ onNavigate }: ScreenNotesProps) {
                               }}
                               className="w-full text-left px-3 py-2 rounded-lg text-[13px] font-medium text-white hover:bg-[#383838] transition cursor-pointer"
                             >
-                              {note.isPinned ? "Desfixar anotação" : "Fixar anotação"}
+                              {note.isPinned ? "Desafixar anotação" : "Fixar anotação"}
                             </button>
                             <button
                               type="button"

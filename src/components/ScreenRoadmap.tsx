@@ -1558,7 +1558,7 @@ let taskStatusText = "";
                                 }}
                                 className="w-full text-left px-3 py-2 rounded-lg text-[13px] font-medium text-white hover:bg-[#383838] transition cursor-pointer"
                               >
-                                {selectedTask.isPinned ? "Desfixar tarefa" : "Fixar tarefa"}
+                                {selectedTask.isPinned ? "Desafixar tarefa" : "Fixar tarefa"}
                               </button>
                               <button
                                 type="button"

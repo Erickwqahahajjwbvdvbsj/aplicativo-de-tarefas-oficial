@@ -681,7 +681,7 @@ export function ScreenGoals({ onNavigate }: { onNavigate: (tab: 'roadmap' | 'hom
                                 }}
                                 className="w-full text-left px-3 py-2 rounded-lg text-[13px] font-medium text-white hover:bg-[#383838] transition cursor-pointer"
                               >
-                                {selectedGoal.isPinned ? "Desfixar objetivo" : "Fixar objetivo"}
+                                {selectedGoal.isPinned ? "Desafixar objetivo" : "Fixar objetivo"}
                               </button>
                               <button
                                 type="button"
